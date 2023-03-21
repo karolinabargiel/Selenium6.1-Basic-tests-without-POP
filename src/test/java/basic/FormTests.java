@@ -31,6 +31,9 @@ public class FormTests extends TestBase {
       WebElement emailInput = driver.findElement(By.cssSelector("#inputEmail3"));
       emailInput.clear();
       emailInput.sendKeys(email);
+      List<WebElement> genders = driver.findElements(By.cssSelector("[name='gridRadiosSex']"));
+      var randomElementSex = genders.get(rand.nextInt(genders.size()));
+      randomElementSex.click();
       driver.findElement(By.cssSelector("#gridRadiosFemale")).click();
       driver.findElement(By.cssSelector("#inputAge3")).sendKeys(age);
       List<WebElement> yearOfExperience = driver.findElements(By.cssSelector("[name*='gridRadiosExperience']"));
@@ -56,4 +59,6 @@ public class FormTests extends TestBase {
       assertTrue(successMessage.isDisplayed());
 
    }
+
+
 }

@@ -35,6 +35,5 @@ public class AccordionTest extends TestBase {
         System.out.println(textSection4.getText());
 
 
-
     }
 }
