@@ -11,10 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
+
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -25,25 +23,22 @@ public class DatepickerTest extends TestBase {
     @ParameterizedTest
     @CsvSource({"http://www.seleniumui.moderntester.pl/datepicker.php"})
     @DisplayName("Datepicker test")
-    void shouldValidateDatepicker (String url) throws InterruptedException {
+    void shouldValidateDatepicker (String url) {
         driver.get(url);
         clickGivenDay(getCurrentDay());
         assertThat(driver.findElement(By.cssSelector("#datepicker")).getAttribute("value")).isEqualTo(getCurrentDate());
-        Thread.sleep(5000);
         driver.navigate().refresh();
         selectDateByInput("04/01/2023");
         assertThat(driver.findElement(By.cssSelector("#datepicker")).getAttribute("value")).isEqualTo("04/01/2023");
-        Thread.sleep(5000);
-        selectDateByClicking("2023", "March", "19");
-        Thread.sleep(5000);
+
 
 
     }
 
     public String getCurrentDay() {
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        int todayInt = calendar.get(Calendar.DAY_OF_MONTH);
-        return Integer.toString(todayInt);
+        LocalDate currentDate = LocalDate.now();
+        int currentDay = currentDate.getDayOfMonth();
+        return Integer.toString(currentDay);
     }
 
     public String getCurrentDate() {
@@ -71,7 +66,7 @@ public class DatepickerTest extends TestBase {
 
     }
 
-    public void selectDateByClicking (String targetYear, String targetMonth, String targetDate) throws InterruptedException {
+    public void selectDateByClicking (String targetYear, String targetMonth, String targetDate) {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         WebElement datepicker = driver.findElement(By.cssSelector("#datepicker"));
         datepicker.click();
